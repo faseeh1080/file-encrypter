@@ -21,9 +21,9 @@ ENCRYPTED_FILE_EXTENSION = '.enc'
 
 # Functions:
 
-def refresh_path_entry(string):
+def refresh_path_entry(new_path):
     path_entry.delete(0, tk.END)
-    path_entry.insert(tk.END, string)
+    path_entry.insert(tk.END, new_path)
 def refresh_action_btn():
     action_btn.config(text=action)
 def refresh_info_l():
@@ -36,15 +36,14 @@ def file_e_func():
     global info
     global info_l
     filepath = filedialog.askopenfilename()
-    path_entry.delete(0, tk.END)
-    path_entry.insert(tk.END, filepath)
+    refresh_path_entry(filepath)
     if filepath.endswith(".enc"):
         action = dec
     else:
         action = enc
-    action_btn.config(text=action)
+    refresh_action_btn()
     info = f"{os.path.basename(filepath)} is selected."
-    info_l.config(text=info)
+    refresh_info_l()
 
 def action_func():
     global filepath
