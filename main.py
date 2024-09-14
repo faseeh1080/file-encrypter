@@ -13,7 +13,8 @@ root.resizable(False, False)
 
 enc = "Encrypt"
 dec = "Decrypt"
-action = enc # Shows at the action button and used to decide whether we need to encrypt or decrypt files.
+no_action = "-"
+action = no_action # Shows at the action button and used to decide whether we need to encrypt or decrypt files.
 info = "No file selected." # Shown at the right of the screen.
 filepath = None
 
@@ -33,21 +34,28 @@ def file_e_func():
     global info
     global info_l
     filepath = filedialog.askopenfilename()
-    if filepath.endswith(".enc"):
+    if filepath == "":
+        action = no_action
+        info = "No file selected."
+    elif filepath.endswith(".enc"):
         action = dec
+        info = f"{os.path.basename(filepath)} is selected."
+    elif filepath.endswith(".key"):
+        action = no_action
+        info = f"{os.path.basename(filepath)} is a key file. Cannot encrypt a key file."
     else:
         action = enc
+        info = f"{os.path.basename(filepath)} is selected."
     refresh_action_btn()
-    info = f"{os.path.basename(filepath)} is selected."
     refresh_info_l()
 
 def action_func():
     global filepath
-    if filepath == None:
+    global action
+    if filepath == None or action == no_action:
         return
     global info
     global info_l
-    global action
     filename = os.path.basename(filepath)
     if action == enc:
         key, cipher_suite = generate_key_and_cipher_suite()
@@ -60,8 +68,7 @@ def action_func():
         refresh_action_btn()
         info = f"{filename} has been encrypted."
         refresh_info_l()
-        return
-    if action == dec:
+    elif action == dec:
         try:
             path_to_key_file = filepath[:-4] + '.key'
             key, cipher_suite = read_key_and_create_cipher_suite(path_to_key_file)
