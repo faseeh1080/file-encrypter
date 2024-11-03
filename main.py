@@ -91,13 +91,17 @@ def update_widgets():
     custom_font.config(size=int(10 * scale_var))
     custom_font2.config(size=int(8 * scale_var))
 
+    # Dynamic border size for buttons
+    border_size = max(2, int(20 * scale_var) / 10)  # Minimum border size of 3 pixels
+    action_btn.config(font=custom_font, borderwidth=border_size)
+    file_e.config(font=custom_font, borderwidth=border_size)
+    
     # Keep the menu button heights consistent
     height = 2  # Fixed height for menu buttons
     scale_down.config(font=custom_font2, height=height)
     scale_up.config(font=custom_font2, height=height)
     help_button.config(font=custom_font2, height=height)
-    action_btn.config(font=custom_font, height=int(2 * scale_var))
-    file_e.config(font=custom_font, height=int(2 * scale_var))
+
     info_l.config(font=custom_font)
 
 def scale_text(increment):
@@ -109,10 +113,6 @@ def scale_text(increment):
 # Widgets:
 menu = tk.Frame(root, bd=2, relief=tk.RAISED, padx=pad2)
 menu.grid(row=0, column=0, columnspan=3, sticky='ew')
-
-# Set a fixed height for the menu
-menu_height = 30  # Adjust this value as needed
-menu.config(height=menu_height)
 
 menu_font = font.Font(size=8)
 scale_down = tk.Button(menu, text="<<", relief=tk.FLAT, font=menu_font, command=lambda: scale_text(-0.25))
@@ -134,17 +134,14 @@ sel_f.grid(row=1, column=0, padx=pad1, pady=pad1, sticky='nsew')
 file_e = tk.Button(root, text="File Explorer", padx=pad1, pady=pad1, command=file_e_func)
 file_e.grid(row=1, column=1, padx=pad1, pady=pad1, sticky='nsew')
 
-# Create the info label without wraplength first
 info_l = tk.Label(root, text=info, font=custom_font, wraplength=0)
 info_l.grid(row=1, column=2, rowspan=2, padx=pad1, pady=pad1, sticky='nsew')
 
 def update_info_label():
-    current_width = root.winfo_width() - (2 * pad1)  # Update width based on the current window size
+    current_width = root.winfo_width() - (2 * pad1)
     info_l.config(wraplength=current_width)
 
-root.bind("<Configure>", lambda event: update_info_label())  # Update on resize
-
-# Initialize the info label's wraplength correctly
+root.bind("<Configure>", lambda event: update_info_label())
 update_info_label()
 
 action_btn = tk.Button(root, text=action, padx=pad1, pady=pad1, font=custom_font, command=action_func)
