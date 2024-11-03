@@ -3,11 +3,11 @@ from tkinter import font
 from tkinter import filedialog
 import os
 from cryptography.fernet import Fernet
-from functions import *  # Ensure this is defined correctly
+from functions import *
 
 root = tk.Tk()
 root.title("Faseeh Encrypts")
-root.resizable(True, True)  # Allow window resizing
+root.resizable(True, True)
 
 # Main variables:
 enc = "Encrypt"
@@ -96,7 +96,6 @@ def update_widgets():
     action_btn.config(font=custom_font, borderwidth=border_size)
     file_e.config(font=custom_font, borderwidth=border_size)
     
-    # Keep the menu button heights consistent
     height = 2  # Fixed height for menu buttons
     scale_down.config(font=custom_font2, height=height)
     scale_up.config(font=custom_font2, height=height)
@@ -107,7 +106,7 @@ def update_widgets():
 def scale_text(increment):
     global scale_var
     scale_var += increment
-    scale_var = max(1, min(scale_var, 2.5))  # Clamping scale_var between 1 and 2.5
+    scale_var = max(1, min(scale_var, 2.5))
     update_widgets()
 
 # Widgets:
@@ -147,5 +146,4 @@ update_info_label()
 action_btn = tk.Button(root, text=action, padx=pad1, pady=pad1, font=custom_font, command=action_func)
 action_btn.grid(row=2, column=0, columnspan=2, padx=pad1, pady=pad1, sticky='nsew')
 
-# Run the main loop
 root.mainloop()
