@@ -90,8 +90,9 @@ custom_font2 = font.Font(size=int(8 * scale_var))
 def update_widgets():
     custom_font.config(size=int(10 * scale_var))
     custom_font2.config(size=int(8 * scale_var))
-    
-    height = int(2 * scale_var)  # Adjust height based on scale_var
+
+    # Keep the menu button heights consistent
+    height = 2  # Fixed height for menu buttons
     scale_down.config(font=custom_font2, height=height)
     scale_up.config(font=custom_font2, height=height)
     help_button.config(font=custom_font2, height=height)
@@ -108,12 +109,18 @@ def scale_text(increment):
 # Widgets:
 menu = tk.Frame(root, bd=2, relief=tk.RAISED, padx=pad2)
 menu.grid(row=0, column=0, columnspan=3, sticky='ew')
-scale_down = tk.Button(menu, text="<<", relief=tk.FLAT, font=custom_font2, command=lambda: scale_text(-0.5))
-scale_down.pack(side=tk.LEFT)
-scale_up = tk.Button(menu, text=">>", relief=tk.FLAT, font=custom_font2, command=lambda: scale_text(0.5))
-scale_up.pack(side=tk.LEFT)
-help_button = tk.Button(menu, text="Help", relief=tk.FLAT, font=custom_font2)
-help_button.pack(side=tk.LEFT)
+
+# Set a fixed height for the menu
+menu_height = 30  # Adjust this value as needed
+menu.config(height=menu_height)
+
+menu_font = font.Font(size=8)
+scale_down = tk.Button(menu, text="<<", relief=tk.FLAT, font=menu_font, command=lambda: scale_text(-0.25))
+scale_down.grid(row=0, column=0, sticky='nsew')
+scale_up = tk.Button(menu, text=">>", relief=tk.FLAT, font=menu_font, command=lambda: scale_text(0.25))
+scale_up.grid(row=0, column=1, sticky='nsew')
+help_button = tk.Button(menu, text="Help", relief=tk.FLAT, font=menu_font)
+help_button.grid(row=0, column=2, sticky='nsew')
 
 # Configure the grid to expand
 root.grid_columnconfigure(0, weight=1)
@@ -141,7 +148,7 @@ root.bind("<Configure>", lambda event: update_info_label())  # Update on resize
 update_info_label()
 
 action_btn = tk.Button(root, text=action, padx=pad1, pady=pad1, font=custom_font, command=action_func)
-action_btn.grid(row=2, column=0, columnspan=2, padx=pad1, pady=pad1, sticky='ew')
+action_btn.grid(row=2, column=0, columnspan=2, padx=pad1, pady=pad1, sticky='nsew')
 
 # Run the main loop
 root.mainloop()
