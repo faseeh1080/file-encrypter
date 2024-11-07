@@ -7,7 +7,7 @@ from functions import *
 
 root = tk.Tk()
 root.title("Faseeh Encrypts")
-root.resizable(True, True)
+root.resizable(False, False)
 
 # Main variables:
 enc = "Encrypt"
@@ -74,10 +74,10 @@ def action_func():
             info = f"{filename} has been decrypted."
             refresh_info_l()
     except Exception as e:
-        info = str(e)  # Display the error message
+        info = str(e)
         refresh_info_l()
 
-# UI variables:
+# UI variables
 scale_var = 1.0
 pad1 = 4 * scale_var
 pad2 = 2 * scale_var
@@ -86,17 +86,15 @@ pad2 = 2 * scale_var
 custom_font = font.Font(size=int(10 * scale_var))
 custom_font2 = font.Font(size=int(8 * scale_var))
 
-# Function to resize text and buttons
 def update_widgets():
     custom_font.config(size=int(10 * scale_var))
     custom_font2.config(size=int(8 * scale_var))
 
-    # Dynamic border size for buttons
-    border_size = max(2, int(20 * scale_var) / 10)  # Minimum border size of 3 pixels
+    border_size = max(2, int(20 * scale_var) / 10)
     action_btn.config(font=custom_font, borderwidth=border_size)
     file_e.config(font=custom_font, borderwidth=border_size)
     
-    height = 2  # Fixed height for menu buttons
+    height = 2
     scale_down.config(font=custom_font2, height=height)
     scale_up.config(font=custom_font2, height=height)
     help_button.config(font=custom_font2, height=height)
@@ -106,7 +104,7 @@ def update_widgets():
 def scale_text(increment):
     global scale_var
     scale_var += increment
-    scale_var = max(1, min(scale_var, 2.5))
+    scale_var = max(1, min(scale_var, 5))
     update_widgets()
 
 # Widgets:
@@ -121,7 +119,6 @@ scale_up.grid(row=0, column=1, sticky='nsew')
 help_button = tk.Button(menu, text="Help", relief=tk.FLAT, font=menu_font)
 help_button.grid(row=0, column=2, sticky='nsew')
 
-# Configure the grid to expand
 root.grid_columnconfigure(0, weight=1)
 root.grid_columnconfigure(1, weight=1)
 root.grid_columnconfigure(2, weight=1)
@@ -137,7 +134,7 @@ info_l = tk.Label(root, text=info, font=custom_font, wraplength=0)
 info_l.grid(row=1, column=2, rowspan=2, padx=pad1, pady=pad1, sticky='nsew')
 
 def update_info_label():
-    current_width = root.winfo_width() - (2 * pad1)
+    current_width = (root.winfo_width() - (2 * pad1)) / 2.3
     info_l.config(wraplength=current_width)
 
 root.bind("<Configure>", lambda event: update_info_label())
