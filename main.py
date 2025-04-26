@@ -6,7 +6,7 @@ from cryptography.fernet import Fernet
 from functions import *
 
 root = tk.Tk()
-root.title("Faseeh Encrypts")
+root.title("File Encrypter by Faseeh")
 root.resizable(False, False)
 
 # Main variables:

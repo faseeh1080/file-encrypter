@@ -1,0 +1,1 @@
+pyinstaller --onefile --noconsole --name file_encrypter main.py
